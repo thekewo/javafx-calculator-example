@@ -43,7 +43,7 @@ public class CalculatorController {
            }
            double number2 = Double.parseDouble(display.getText());
            double result = calculator.calculate(number1, number2, operator);
-           display.setText(String.format("%.0f", result));
+           display.setText(String.valueOf(result));
            operator = "";
         } else {
             if (! operator.isEmpty()) {
@@ -55,4 +55,29 @@ public class CalculatorController {
         }
     }
 
+    @FXML
+    public void processAC(ActionEvent event) {
+        String ACButton = ((Button) event.getSource()).getText();
+        System.out.println(ACButton);
+        calculator = new Calculator();
+        display.setText("0");
+        number1 = 0;
+        operator = "";
+    }
+
+    @FXML
+    public void processDOT(ActionEvent event) {
+        if ( ! display.getText().contains(".")) {
+            double d = Double.parseDouble(display.getText());
+            display.setText(String.format("%.0f.", d));
+            System.out.println(".");
+        }
+    }
+
+    @FXML
+    public void processPM(ActionEvent event) {
+        double number = calculator.calculate(Double.parseDouble(display.getText()), -1, "*");
+        display.setText(String.valueOf(number));
+        System.out.println("Changed current number's sign.");
+    }
 }
